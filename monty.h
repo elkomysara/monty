@@ -6,12 +6,12 @@
 
 /**
 * struct stack_s - doubly linked list representation of a stack (or queue)
-* @n: integer value stored in the node
+* @n: integer
 * @prev: points to the previous element of the stack (or queue)
 * @next: points to the next element of the stack (or queue)
 *
-* Description: Doubly linked list node structure
-* used for stack, queues, LIFO, FIFO
+* Description: doubly linked list node structure
+* for stack, queues, LIFO, FIFO
 */
 typedef struct stack_s
 {
@@ -21,11 +21,11 @@ struct stack_s *next;
 } stack_t;
 
 /**
-* struct instruction_s - opcode and its corresponding function
+* struct instruction_s - opcode and its function
 * @opcode: the opcode
 * @f: function to handle the opcode
 *
-* Description: Opcode and its corresponding function
+* Description: opcode and its function
 * for stack, queues, LIFO, FIFO
 */
 typedef struct instruction_s
@@ -34,9 +34,10 @@ char *opcode;
 void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void execute_line(char *line, stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 void push(stack_t **stack, unsigned int line_number, const char *arg);
 void pall(stack_t **stack, unsigned int line_number);
+void execute_line(char *line, stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 
 #endif /* MONTY_H */

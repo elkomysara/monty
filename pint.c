@@ -6,8 +6,9 @@
 * @counter: line number
 * @bus: unused
 *
-* Description: This function prints the value at the top of the stack.
-* If the stack is empty, it prints an error message and exits with failure.
+* Description: If the stack is empty, the function prints an error message
+* and exits with failure. Otherwise, it prints the value at the top of
+* the stack followed by a new line.
 * Return: no return
 */
 void f_pint(stack_t **head, unsigned int counter, bus_t *bus)

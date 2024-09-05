@@ -1,59 +1,97 @@
 #include "monty.h"
-#include <ctype.h> /* Added this to declare isdigit function */
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 /**
-* execute_line - Executes a single line of bytecode.
-* @line: The line to execute.
-* @stack: The stack to operate on.
-* @line_number: The current line number in the file.
-*
-* Description: This function parses the bytecode line
-* and executes the corresponding stack operations.
+* execute_line - Executes a line from the Monty bytecode file
+* @line: Line to execute
+* @stack: Double pointer to the stack
+* @line_number: Line number of the current line
 */
 void execute_line(char *line, stack_t **stack, unsigned int line_number)
 {
-/* Moved the declaration before code */
+instruction_t instructions[] = {
+{"pall", pall},
+{NULL, NULL}
+};
+char *opcode;
 char *arg;
+int i = 0;
 
-/* Temporary use of 'stack' to suppress warning until push is implemented */
-(void)stack;
+opcode = strtok(line, " \n");
+if (!opcode || opcode[0] == '#') /* Ignore comments */
+return;
 
-if (strncmp(line, "push", 4) == 0)
+arg = strtok(NULL, " \n");
+
+if (strcmp(opcode, "push") == 0) /* Handle push separately */
 {
-arg = strtok(line + 4, " \t\n");
-if (!arg || !isdigit(*arg))
+push(stack, line_number, arg);
+return;
+}
+
+while (instructions[i].opcode)
 {
-fprintf(stderr, "L%d: usage: push integer\n", line_number);
+if (strcmp(instructions[i].opcode, opcode) == 0)
+{
+instructions[i].f(stack, line_number); /* Call function for pall */
+return;
+}
+i++;
+}
+
+fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
 exit(EXIT_FAILURE);
-}
-/* int value = atoi(arg); // Commented out as it's not yet used */
-/* Call push function here (to be implemented) */
-}
-else if (strcmp(line, "pall\n") == 0)
-{
-/* Call pall function here (to be implemented) */
-}
-else
-{
-fprintf(stderr, "L%d: unknown instruction %s\n", line_number, line);
-exit(EXIT_FAILURE);
-}
 }
 
 /**
-* free_stack - Frees a stack.
-* @stack: The stack to free.
-*
-* Description: This function frees the entire stack to
-* release memory allocated for stack nodes.
+* push - Pushes an element to the stack
+* @stack: Double pointer to the stack
+* @line_number: Line number of the current line
+* @arg: Argument to push
 */
-void free_stack(stack_t *stack)
+void push(stack_t **stack, unsigned int line_number, const char *arg)
 {
-stack_t *temp;
-while (stack)
+stack_t *new_node;
+int value;
+
+if (!arg || !isdigit(*arg))
 {
-temp = stack->next;
-free(stack);
-stack = temp;
+fprintf(stderr, "L%u: usage: push integer\n", line_number);
+exit(EXIT_FAILURE);
+}
+
+value = atoi(arg);
+new_node = malloc(sizeof(stack_t));
+if (!new_node)
+{
+fprintf(stderr, "Error: malloc failed\n");
+exit(EXIT_FAILURE);
+}
+
+new_node->n = value;
+new_node->next = *stack;
+new_node->prev = NULL;
+if (*stack)
+(*stack)->prev = new_node;
+*stack = new_node;
+}
+
+/**
+* pall - Prints all the values on the stack
+* @stack: Double pointer to the stack
+* @line_number: Line number of the current line
+*/
+void pall(stack_t **stack, unsigned int line_number)
+{
+stack_t *current = *stack;
+(void)line_number;
+
+while (current)
+{
+printf("%d\n", current->n);
+current = current->next;
 }
 }

@@ -1,7 +1,4 @@
 #include "monty.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 /**
 * main - Entry point for Monty interpreter
@@ -11,11 +8,12 @@
 */
 int main(int argc, char **argv)
 {
+char *content = NULL;
 FILE *file;
-char *line = NULL;
-size_t len = 0;
-unsigned int line_number = 0;
+size_t size = 0;
+int read_line = 1;
 stack_t *stack = NULL;
+unsigned int counter = 0;
 
 if (argc != 2)
 {
@@ -30,13 +28,17 @@ fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 exit(EXIT_FAILURE);
 }
 
-while (fgets(line, len, file) != NULL)
+while (read_line > 0)
 {
-line_number++;
-execute_line(line, &stack, line_number);
+content = NULL;
+read_line = _getline(&content, &size, file); /* Use custom getline */
+counter++;
+if (read_line > 0)
+{
+execute(content, &stack, counter, file); /* No need for bus */
 }
-
-free(line);
+free(content);
+}
 free_stack(stack);
 fclose(file);
 return (0);

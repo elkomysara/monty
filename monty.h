@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
 * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -34,10 +35,31 @@ char *opcode;
 void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void pint(stack_t **stack, unsigned int line_number);
-void push(stack_t **stack, unsigned int line_number, const char *arg);
-void pall(stack_t **stack, unsigned int line_number);
-void execute_line(char *line, stack_t **stack, unsigned int line_number);
-void free_stack(stack_t *stack);
+/**
+* struct bus_s - carries values through the program
+* @arg: argument value
+* @file: pointer to monty file
+* @content: line content
+* @lifi: flag to change stack <-> queue
+*/
+typedef struct bus_s
+{
+char *arg;
+FILE *file;
+char *content;
+int lifi;
+} bus_t;
+
+extern bus_t bus;
+
+void f_push(stack_t **head, unsigned int counter);
+void f_pall(stack_t **head, unsigned int counter);
+void free_stack(stack_t *head);
+int execute(char *content, stack_t **stack, unsigned int counter, FILE *file);
+void addnode(stack_t **head, int n);
+void addqueue(stack_t **head, int n);
+
+/* Custom implementation of getline */
+int _getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif /* MONTY_H */

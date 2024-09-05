@@ -15,12 +15,11 @@
 *
 * Return: 0 on success, or exits with failure if an error occurs
 */
-
 int execute(char *content, stack_t **stack,
 unsigned int counter, FILE *file, bus_t *bus)
 {
 instruction_t opst[] = {
-{"push", f_push}, {"pall", f_pall},
+{"push", f_push}, {"pall", f_pall}, {"pint", f_pint},
 {NULL, NULL}
 };
 unsigned int i = 0;

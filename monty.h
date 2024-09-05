@@ -52,6 +52,7 @@ void (*f)(stack_t **stack, unsigned int line_number, bus_t *bus);
 
 void f_push(stack_t **head, unsigned int counter, bus_t *bus);
 void f_pall(stack_t **head, unsigned int counter, bus_t *bus);
+void f_pint(stack_t **head, unsigned int counter, bus_t *bus);
 void free_stack(stack_t *head);
 int execute(char *content, stack_t **stack,
 unsigned int counter, FILE *file, bus_t *bus);

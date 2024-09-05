@@ -5,10 +5,19 @@
 * @stack: head linked list - stack
 * @counter: line_counter
 * @file: pointer to monty file
-* @content: line content
-* Return: no return
+* @bus: pointer to bus structure
+* @content: line content to be parsed and executed
+*
+* Description: This function processes the content from the Monty bytecode
+* file line by line, identifying and executing the appropriate opcode.
+* It utilizes a bus structure to manage state and handles errors if
+* an unknown instruction is encountered.
+*
+* Return: 0 on success, or exits with failure if an error occurs
 */
-int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
+
+int execute(char *content, stack_t **stack,
+unsigned int counter, FILE *file, bus_t *bus)
 {
 instruction_t opst[] = {
 {"push", f_push}, {"pall", f_pall},
@@ -20,13 +29,13 @@ char *op;
 op = strtok(content, " \n\t");
 if (op && op[0] == '#')
 return (0);
-bus.arg = strtok(NULL, " \n\t");
+bus->arg = strtok(NULL, " \n\t");
 
 while (opst[i].opcode && op)
 {
 if (strcmp(op, opst[i].opcode) == 0)
 {
-opst[i].f(stack, counter);
+opst[i].f(stack, counter, bus);
 return (0);
 }
 i++;

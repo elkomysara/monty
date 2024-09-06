@@ -25,6 +25,7 @@ instruction_t opst[] = {
 {"pint", f_pint},
 {"swap", f_swap},
 {"add", f_add},
+{"nop", f_nop},
 {NULL, NULL}
 };
 unsigned int i = 0;

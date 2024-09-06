@@ -27,6 +27,7 @@ instruction_t opst[] = {
 {"add", f_add},
 {"nop", f_nop},
 {"sub", f_sub},
+{"div", f_div},
 {NULL, NULL}
 };
 unsigned int i = 0;

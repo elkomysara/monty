@@ -55,6 +55,7 @@ void f_pall(stack_t **head, unsigned int counter, bus_t *bus);
 void f_pop(stack_t **head, unsigned int counter, bus_t *bus);
 void f_pint(stack_t **head, unsigned int counter, bus_t *bus);
 void f_swap(stack_t **head, unsigned int counter, bus_t *bus);
+void f_add(stack_t **head, unsigned int counter, bus_t *bus);
 void free_stack(stack_t *head);
 int execute(char *content, stack_t **stack,
 unsigned int counter, FILE *file, bus_t *bus);

@@ -59,6 +59,7 @@ void f_add(stack_t **head, unsigned int counter, bus_t *bus);
 void f_nop(stack_t **head, unsigned int counter, bus_t *bus);
 void f_sub(stack_t **head, unsigned int counter, bus_t *bus);
 void f_div(stack_t **head, unsigned int counter, bus_t *bus);
+void f_mul(stack_t **head, unsigned int counter, bus_t *bus);
 void free_stack(stack_t *head);
 int execute(char *content, stack_t **stack,
 unsigned int counter, FILE *file, bus_t *bus);
